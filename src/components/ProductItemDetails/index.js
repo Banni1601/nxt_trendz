@@ -24,10 +24,16 @@ class ProductItemDetails extends Component {
     similarProductsData: [],
     apiStatus: apiStatusConstants.initial,
     quantity: 1,
+    c: true,
   }
 
   componentDidMount() {
+    this.setState({c: !this.state.c})
+    this.a()
     this.getProductData()
+  }
+  a = () => {
+    this.setState({c: !this.state.c})
   }
 
   getFormattedData = data => ({
@@ -46,12 +52,12 @@ class ProductItemDetails extends Component {
     const {match} = this.props
     const {params} = match
     const {id} = params
-
     this.setState({
       apiStatus: apiStatusConstants.inProgress,
     })
     const jwtToken = Cookies.get('jwt_token')
     const apiUrl = `https://apis.ccbp.in/products/${id}`
+    console.log(id)
     const options = {
       headers: {
         Authorization: `Bearer ${jwtToken}`,
@@ -124,6 +130,7 @@ class ProductItemDetails extends Component {
           rating,
           title,
           totalReviews,
+          id,
         } = productData
         const {addCartItem} = value
         const onClickAddToCart = () => {
